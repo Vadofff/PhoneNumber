@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
@@ -20,10 +19,10 @@ public class Main {
         List<User> users = readUsersFromFile(filePath);
         writeUsersToJson(users, outputPath);
         String filePathName = "src/resurs/words.txt";
-        Map<String, Integer> wordFrequency = WordFrequencyCounter.countWordFrequency(filePathName);
-        for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
+        Map<String, Integer> wordFrequency = WordFrequencyCounter.calculateWordFrequency("src/resurs/words.txt");
+        wordFrequency.entrySet().stream()
+                .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
+                .forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
     }
 
     private static List<User> readUsersFromFile(String filePath) {
